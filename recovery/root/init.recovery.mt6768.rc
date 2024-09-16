@@ -22,6 +22,7 @@ on init
     chmod 0664 /dev/touch
 
     # Load Touch Driver
+    chmod 0644 /lib/modules/adaptive-ts.ko
     insmod /lib/modules/adaptive-ts.ko
 
 on fs
