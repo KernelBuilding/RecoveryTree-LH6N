@@ -23,8 +23,8 @@ on init
 
     # Load Touch Driver
     insmod /lib/modules/adaptive-ts.ko
-    insmod omnivision_td4160.ko
-    insmod td4160_hdp_dsi_vdo_boe_panda_lh6n.ko
+    insmod /lib/modules/omnivision_td4160.ko
+    insmod /lib/modules/td4160_hdp_dsi_vdo_boe_panda_lh6n.ko
 
 on fs
     #on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
