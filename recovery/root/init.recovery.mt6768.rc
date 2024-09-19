@@ -22,8 +22,9 @@ on init
     chmod 0664 /dev/touch
 
     # Load Touch Driver
-    chmod 0644 /lib/modules/adaptive-ts.ko
     insmod /lib/modules/adaptive-ts.ko
+    insmod omnivision_td4160.ko
+    insmod td4160_hdp_dsi_vdo_boe_panda_lh6n.ko
 
 on fs
     #on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
