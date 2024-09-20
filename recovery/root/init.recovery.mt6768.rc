@@ -18,17 +18,9 @@ on init
     symlink /mnt/vendor/nvcfg /vendor/nvcfg
     symlink /mnt/vendor/nvdata /vendor/nvdata
 
-    # Touch Panel
-    chmod 0664 /dev/touch
-
-    # Load Touch Driver
-    insmod /lib/modules/adaptive-ts.ko
-    insmod /lib/modules/omnivision_td4160.ko
-    insmod /lib/modules/td4160_hdp_dsi_vdo_boe_panda_lh6n.ko
-
 on fs
-    #on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
     install_keyring
+    start load_modules
 
 service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
@@ -44,6 +36,13 @@ service keymaster-4-1 /vendor/bin/android.hardware.keymaster@4.1-service.truston
     user root
     group root drmrpc
     disabled
+    seclabel u:r:recovery:s0
+
+service load_modules /system/bin/load_modules.sh
+    oneshot
+    disabled
+    user root
+    group root
     seclabel u:r:recovery:s0
 
 on property:hwservicemanager.ready=true
