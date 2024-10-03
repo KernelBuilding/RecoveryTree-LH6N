@@ -17,11 +17,10 @@ on init
     symlink /mnt/vendor/protect_s /vendor/protect_s
     symlink /mnt/vendor/nvcfg /vendor/nvcfg
     symlink /mnt/vendor/nvdata /vendor/nvdata
-    setenforce 0
+    start insmod_sh
 
 on fs
     install_keyring
-    start load_modules
 
 service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
@@ -39,12 +38,12 @@ service keymaster-4-1 /vendor/bin/android.hardware.keymaster@4.1-service.truston
     disabled
     seclabel u:r:recovery:s0
 
-service load_modules /system/bin/load_modules.sh
-    oneshot
-    disabled
+service insmod_sh /vendor/bin/init.insmod.sh /vendor/etc/init.insmod.cfg
+    class main
     user root
-    group root
-    seclabel u:r:recovery:s0
+    group root system
+    disabled
+    oneshot
 
 on property:hwservicemanager.ready=true
     start keystore
